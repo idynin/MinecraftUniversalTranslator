@@ -14,8 +14,14 @@ import java.util.zip.GZIPOutputStream;
 public class FlatFileTranslateCache implements TranslateCache {
 
 	private HashMap<String, String> translationCache;
+	private File cacheFile;
 
 	public FlatFileTranslateCache() {
+		this(new File("translationCache.dat"));
+	}
+
+	public FlatFileTranslateCache(File cacheFile) {
+		this.cacheFile = cacheFile;
 		translationCache = new HashMap<String, String>();
 		loadCache();
 	}
@@ -41,7 +47,6 @@ public class FlatFileTranslateCache implements TranslateCache {
 	public void storeCache() {
 
 		try {
-			File cacheFile = new File("translationCache.dat");
 			FileOutputStream fos = new FileOutputStream(cacheFile);
 			ObjectOutputStream oos = new ObjectOutputStream(
 					new BufferedOutputStream(new GZIPOutputStream(fos)));
@@ -59,7 +64,6 @@ public class FlatFileTranslateCache implements TranslateCache {
 	@SuppressWarnings("unchecked")
 	public void loadCache() {
 
-		File cacheFile = new File("translationCache.dat");
 		if (cacheFile.exists()) {
 			try {
 				FileInputStream fis = new FileInputStream(cacheFile);
@@ -82,7 +86,7 @@ public class FlatFileTranslateCache implements TranslateCache {
 	@Override
 	public void clearCache() {
 		translationCache = new HashMap<String, String>();
-		this.storeCache();		
+		this.storeCache();
 	}
 
 }

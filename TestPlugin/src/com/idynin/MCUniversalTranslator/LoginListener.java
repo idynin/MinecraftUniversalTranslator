@@ -1,4 +1,4 @@
-package com.idynin.TestPlugin;
+package com.idynin.MCUniversalTranslator;
 
 import java.util.logging.Logger;
 

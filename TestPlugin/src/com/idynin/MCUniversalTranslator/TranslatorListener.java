@@ -1,4 +1,4 @@
-package com.idynin.TestPlugin;
+package com.idynin.MCUniversalTranslator;
 
 import java.util.logging.Logger;
 
@@ -9,9 +9,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class TranslatorListener implements Listener {
-	private TestPlugin plugin;
+	private MCUniversalTranslatorPlugin plugin;
 
-	public TranslatorListener(TestPlugin plugin) {
+	public TranslatorListener(MCUniversalTranslatorPlugin plugin) {
 		this.plugin = plugin;
 		this.plugin.getLogger().info("ChatListener Created");
 	}

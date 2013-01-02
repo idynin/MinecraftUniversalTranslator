@@ -1,4 +1,4 @@
-package com.idynin.TestPlugin;
+package com.idynin.MCUniversalTranslator;
 
 import java.util.HashSet;
 
@@ -10,7 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.idynin.googletranslateapi.Translator;
 
-public class TestPlugin extends JavaPlugin {
+public class MCUniversalTranslatorPlugin extends JavaPlugin {
 
 	protected Translator translator;
 

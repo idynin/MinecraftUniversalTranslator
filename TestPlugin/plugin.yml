@@ -1,14 +1,14 @@
-name: TestPlugin
-main: com.idynin.TestPlugin.TestPlugin
+name: idyninMCUniversalTranslator
+main: com.idynin.MCUniversalTranslator.MCUniversalTranslatorPlugin
 version: 0.1
 
 commands:
   tran:
-    description: Tran Command.
+    description: Translation Command.
     usage: /<command>
     permission: TestPlugin.testplugin
     permission-message: You don't have <permission>
 permissions:
-  TestPlugin.testplugin:
-    description: Allow running of testplugin command.
-    default: true
+  MCUniversalTranslator.manager:
+    description: Allow managing Universal Translator.
+    default: false

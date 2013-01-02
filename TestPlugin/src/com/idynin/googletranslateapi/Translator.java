@@ -1,5 +1,6 @@
 package com.idynin.googletranslateapi;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -32,18 +33,36 @@ public class Translator {
 
 	private String lastDetectedLanguage = "";
 
+	private File dataDirectory;
+
 	TranslateCache cache;
 
 	public Translator() {
-		this(2);
+		this(2, new File("translatorData"));
 	}
 
-	public Translator(int threads) {
+	public Translator(File dataDirectory) {
+		this(2, dataDirectory);
+	}
+
+	public Translator(int threads, File dataDirectory) {
 		this.threads = threads;
+
+		this.dataDirectory = dataDirectory;
 
 		executor = Executors.newFixedThreadPool(this.threads);
 
-		cache = new FlatFileTranslateCache();
+		initializeDataDirectory();
+		
+		cache = new FlatFileTranslateCache(new File(
+				this.dataDirectory.getAbsolutePath() + File.pathSeparatorChar
+						+ "translateCache.dat"));
+	}
+
+	private void initializeDataDirectory() {
+		if (!this.dataDirectory.exists()) {
+			this.dataDirectory.mkdirs();
+		}
 	}
 
 	public String getLastDetectedLanguage() {
