@@ -79,7 +79,7 @@ public class FlatFileTranslateCache implements TranslateCache {
 			}
 		}
 		if (translationCache == null) {
-			translationCache = new HashMap<String, String>();
+			clearCache();
 		}
 	}
 

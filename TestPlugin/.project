@@ -26,5 +26,10 @@
 			<type>2</type>
 			<location>C:/minecraft_server_dev/plugins</location>
 		</link>
+		<link>
+			<name>run_server.bat</name>
+			<type>1</type>
+			<location>C:/minecraft_server_dev/run_server.bat</location>
+		</link>
 	</linkedResources>
 </projectDescription>

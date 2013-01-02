@@ -53,9 +53,9 @@ public class Translator {
 		executor = Executors.newFixedThreadPool(this.threads);
 
 		initializeDataDirectory();
-		
+
 		cache = new FlatFileTranslateCache(new File(
-				this.dataDirectory.getAbsolutePath() + File.pathSeparatorChar
+				this.dataDirectory.getAbsolutePath() + File.separator
 						+ "translateCache.dat"));
 	}
 

@@ -28,12 +28,17 @@ public class TranslatorListener implements Listener {
 					@Override
 					public void run() {
 						plugin.translator.autoTranslate(message);
-						if(plugin.translator.getLastDetectedLanguage().equalsIgnoreCase("en")){
+						if (plugin.translator.getLastDetectedLanguage()
+								.equalsIgnoreCase("en")) {
 							return;
 						}
 						for (Player r : event.getRecipients()) {
-							r.sendMessage(player.getDisplayName() + ": "
-									+ plugin.translator.autoTranslate(message));
+							if (plugin.playerEnabled(r)) {
+								r.sendMessage(player.getDisplayName()
+										+ ": "
+										+ plugin.translator
+												.autoTranslate(message));
+							}
 						}
 					}
 				});
