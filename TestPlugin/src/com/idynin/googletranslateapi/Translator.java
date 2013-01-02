@@ -46,8 +46,8 @@ public class Translator {
 	public Translator(File dataDirectory) {
 		this(2, dataDirectory);
 	}
-	
-	public String getTL(){
+
+	public String getTL() {
 		return autoTL;
 	}
 
@@ -90,8 +90,8 @@ public class Translator {
 
 		cache.storeCache();
 	}
-	
-	public void setTargetLanguage(String language){
+
+	public void setTargetLanguage(String language) {
 		autoTL = language;
 	}
 
@@ -129,18 +129,20 @@ public class Translator {
 
 			// http://translate.google.com/translate_a/t?client=t&text=diese%20Worte.%20diese%20Worte.%20diese%20Worte.%20diese%20Worte.%20diese%20Worte.%20diese%20Worte.%20diese%20Worte.%20diese%20Worte.%20diese%20Worte.%20diese%20Worte.&hl=en&sl=auto&tl=en&ie=UTF-8&oe=UTF-8&multires=1&otf=2&pc=3&ssel=3&tsel=3&uptl=en&alttl=de&sc=1
 
-			URL longURL = new URL(
-					"http://translate.google.com/translate_a/t?client=t&text="
-							+ sourcetext
-							+ "&hl=en&sl="
-							+ sourceLang
-							+ "&tl="
-							+ targetLang
-							+ "&ie=UTF-8&oe=UTF-8&multires=1&otf=2&pc=3&ssel=3&tsel=3&uptl=en&alttl=de&sc=1");
-			URL shortURL = new URL(
-					"http://translate.google.com/translate_a/t?client=t&text="
-							+ sourcetext + "&sl=" + sourceLang + "&tl="
-							+ targetLang + "&ie=UTF-8&oe=UTF-8");
+
+			String urlString = "http://translate.google.com/translate_a/t?client=t&text="
+					+ sourcetext
+					+ "&hl=en&sl="
+					+ sourceLang
+					+ "&tl="
+					+ targetLang
+					+ "&ie=UTF-8&oe=UTF-8&multires=1&otf=2&pc=3&ssel=3&tsel=3&uptl=en&alttl=de&sc=1";
+
+			URL longURL = new URL(urlString);
+			//URL shortURL = new URL(
+			//		"http://translate.google.com/translate_a/t?client=t&text="
+			//				+ sourcetext + "&sl=" + sourceLang + "&tl="
+			//				+ targetLang + "&ie=UTF-8&oe=UTF-8");
 			JsonElement je = performGet(longURL);
 
 			System.out.println(je);
