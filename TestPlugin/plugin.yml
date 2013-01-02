@@ -1,0 +1,14 @@
+name: TestPlugin
+main: com.idynin.TestPlugin.TestPlugin
+version: 0.1
+
+commands:
+  tran:
+    description: Tran Command.
+    usage: /<command>
+    permission: TestPlugin.testplugin
+    permission-message: You don't have <permission>
+permissions:
+  TestPlugin.testplugin:
+    description: Allow running of testplugin command.
+    default: true
