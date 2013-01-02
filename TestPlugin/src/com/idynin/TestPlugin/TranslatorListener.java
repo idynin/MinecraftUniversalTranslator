@@ -16,6 +16,7 @@ public class TranslatorListener implements Listener {
 		this.plugin.getLogger().info("ChatListener Created");
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onChatEvent(final AsyncPlayerChatEvent event) {
 		Logger.getLogger("Minecraft").info(

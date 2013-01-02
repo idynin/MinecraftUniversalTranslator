@@ -29,7 +29,7 @@ public class Translator {
 	private ExecutorService executor;
 
 	private long lastCall = 0l;
-	
+
 	private String lastDetectedLanguage = "";
 
 	TranslateCache cache;
@@ -45,15 +45,15 @@ public class Translator {
 
 		cache = new FlatFileTranslateCache();
 	}
-	
-	public String getLastDetectedLanguage(){
+
+	public String getLastDetectedLanguage() {
 		return lastDetectedLanguage;
 	}
 
 	public void storeCache() {
 		cache.storeCache();
 	}
-	
+
 	public void clearCache() {
 		cache.clearCache();
 	}
@@ -72,8 +72,8 @@ public class Translator {
 
 	public String translate(String sourcetext, String sourceLang,
 			String targetLang) {
-		
-		if(sourcetext == null){
+
+		if (sourcetext == null) {
 			return "translation error";
 		}
 
@@ -87,26 +87,36 @@ public class Translator {
 		if (cache.contains(sourcetext)) {
 			System.out.println("Hit Cache");
 			String result = cache.fetch(sourcetext);
-			lastDetectedLanguage = result.substring(0,2);
+			lastDetectedLanguage = result.substring(0, 2);
 			return result.substring(3);
 		}
 		System.out.println("Not in cache, fetching...");
 
 		try {
-			//while (System.currentTimeMillis() - lastCall < rateLimitms) {
-				//Thread.sleep(100);
-			//}
-			//lastCall = System.currentTimeMillis();
+			// while (System.currentTimeMillis() - lastCall < rateLimitms) {
+			// Thread.sleep(100);
+			// }
+			// lastCall = System.currentTimeMillis();
 
-			JsonElement je = performGet(new URL(
+			// http://translate.google.com/translate_a/t?client=t&text=diese%20Worte.%20diese%20Worte.%20diese%20Worte.%20diese%20Worte.%20diese%20Worte.%20diese%20Worte.%20diese%20Worte.%20diese%20Worte.%20diese%20Worte.%20diese%20Worte.&hl=en&sl=auto&tl=en&ie=UTF-8&oe=UTF-8&multires=1&otf=2&pc=3&ssel=3&tsel=3&uptl=en&alttl=de&sc=1
+
+			URL longURL = new URL(
+					"http://translate.google.com/translate_a/t?client=t&text="
+							+ sourcetext
+							+ "&hl=en&sl="
+							+ sourceLang
+							+ "&tl="
+							+ targetLang
+							+ "&ie=UTF-8&oe=UTF-8&multires=1&otf=2&pc=3&ssel=3&tsel=3&uptl=en&alttl=de&sc=1");
+			URL shortURL = new URL(
 					"http://translate.google.com/translate_a/t?client=t&text="
 							+ sourcetext + "&sl=" + sourceLang + "&tl="
-							+ targetLang + "&ie=UTF-8&oe=UTF-8"));
+							+ targetLang + "&ie=UTF-8&oe=UTF-8");
+			JsonElement je = performGet(longURL);
 
 			System.out.println(je);
 			lastDetectedLanguage = je.getAsJsonArray().get(2).getAsString();
-			System.out.println("Detected Language: "
-					+ lastDetectedLanguage);
+			System.out.println("Detected Language: " + lastDetectedLanguage);
 
 			String translatedText = je.getAsJsonArray().get(0).getAsJsonArray()
 					.get(0).getAsJsonArray().get(0).getAsString();
@@ -117,10 +127,10 @@ public class Translator {
 
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
-		} 
-//		catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
+		}
+		// catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
 		return "";
 	}
 
