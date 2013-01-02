@@ -48,6 +48,9 @@ public class MCUniversalTranslatorPlugin extends JavaPlugin {
 			p.sendMessage("saved cache");
 		} else if (args[0].equalsIgnoreCase("list")){
 			p.sendMessage(translateUsers.toString());
+		}else if (args[0].equalsIgnoreCase("tl")){
+			translator.setTargetLanguage(args[1].toLowerCase());
+			p.sendMessage("target language set to " + args[1].toLowerCase());
 		}
 	}
 

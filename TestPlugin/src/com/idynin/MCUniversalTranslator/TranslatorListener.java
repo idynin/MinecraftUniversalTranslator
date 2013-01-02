@@ -29,7 +29,7 @@ public class TranslatorListener implements Listener {
 					public void run() {
 						plugin.translator.autoTranslate(message);
 						if (plugin.translator.getLastDetectedLanguage()
-								.equalsIgnoreCase("en")) {
+								.equalsIgnoreCase(plugin.translator.getTL())) {
 							return;
 						}
 						for (Player r : event.getRecipients()) {

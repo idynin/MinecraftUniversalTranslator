@@ -20,7 +20,9 @@ import com.google.gson.JsonParser;
 
 public class Translator {
 
-	private static final String autoSL = "auto", autoTL = "en";
+	private static final String autoSL = "auto";
+
+	private static String autoTL = "en";
 
 	private static final int rateLimitms = 1000;
 
@@ -43,6 +45,10 @@ public class Translator {
 
 	public Translator(File dataDirectory) {
 		this(2, dataDirectory);
+	}
+	
+	public String getTL(){
+		return autoTL;
 	}
 
 	public Translator(int threads, File dataDirectory) {
@@ -83,6 +89,10 @@ public class Translator {
 		}
 
 		cache.storeCache();
+	}
+	
+	public void setTargetLanguage(String language){
+		autoTL = language;
 	}
 
 	public String autoTranslate(String sourcetext) {
