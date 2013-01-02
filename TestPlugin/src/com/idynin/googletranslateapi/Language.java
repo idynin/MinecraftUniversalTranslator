@@ -16,7 +16,7 @@ public enum Language {
 			"sv"), TAMIL("ta"), TELUGU("te"), THAI("th"), TURKISH("tr"), UKRAINIAN(
 			"uk"), URDU("ur"), VIETNAMESE("vi"), WELSH("cy"), YIDDISH("yi");
 
-	String code;
+	public String code;
 
 	Language(String code) {
 		this.code = code;

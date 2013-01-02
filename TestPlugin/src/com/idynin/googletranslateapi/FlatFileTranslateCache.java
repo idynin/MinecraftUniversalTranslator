@@ -28,8 +28,6 @@ public class FlatFileTranslateCache implements TranslateCache {
 
 	@Override
 	public boolean contains(String source) {
-		System.err.println("source null?" + (source == null));
-		System.err.println("cache null?" + (translationCache == null));
 		return translationCache.containsKey(source);
 	}
 

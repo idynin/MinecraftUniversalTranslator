@@ -16,15 +16,14 @@ public class TranslatorListener implements Listener {
 		this.plugin.getLogger().info("ChatListener Created");
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onChatEvent(final AsyncPlayerChatEvent event) {
 		Logger.getLogger("Minecraft").info(
 				"Caught Message: " + event.getMessage());
-		final String message = event.getMessage();
+		final String message = new String(event.getMessage());
 		final Player player = event.getPlayer();
 		plugin.getServer().getScheduler()
-				.scheduleAsyncDelayedTask(plugin, new Runnable() {
+				.runTaskAsynchronously(plugin, new Runnable() {
 					@Override
 					public void run() {
 						plugin.translator.autoTranslate(message);

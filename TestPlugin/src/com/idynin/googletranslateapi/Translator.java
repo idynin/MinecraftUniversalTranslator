@@ -16,7 +16,9 @@ import java.util.concurrent.Future;
 import org.apache.commons.lang3.CharEncoding;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 public class Translator {
 
@@ -171,11 +173,20 @@ public class Translator {
 
 			InputStream body = response.get().getBody();
 
-			return new JsonParser().parse(new InputStreamReader(body));
+			return new JsonParser().parse(new InputStreamReader(body,CharEncoding.UTF_8));
 
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonSyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

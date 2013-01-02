@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.idynin.googletranslateapi.Translator;
 
@@ -25,8 +26,8 @@ public class MCUniversalTranslatorPlugin extends JavaPlugin {
 		}
 		return false;
 	}
-	
-	public boolean playerEnabled(Player p){
+
+	public boolean playerEnabled(Player p) {
 		return translateUsers.contains(p);
 	}
 
@@ -46,9 +47,9 @@ public class MCUniversalTranslatorPlugin extends JavaPlugin {
 		} else if (args[0].equalsIgnoreCase("storecache")) {
 			translator.storeCache();
 			p.sendMessage("saved cache");
-		} else if (args[0].equalsIgnoreCase("list")){
+		} else if (args[0].equalsIgnoreCase("list")) {
 			p.sendMessage(translateUsers.toString());
-		}else if (args[0].equalsIgnoreCase("tl")){
+		} else if (args[0].equalsIgnoreCase("tl")) {
 			translator.setTargetLanguage(args[1].toLowerCase());
 			p.sendMessage("target language set to " + args[1].toLowerCase());
 		}
@@ -60,12 +61,25 @@ public class MCUniversalTranslatorPlugin extends JavaPlugin {
 		// super.onEnable();
 		getLogger().info("TestPlugin: onEnable()");
 		PluginManager pm = getServer().getPluginManager();
-		
+
 		this.saveDefaultConfig();
 
 		translator = new Translator(getDataFolder());
 		pm.registerEvents(new LoginListener(this), this);
 		pm.registerEvents(new TranslatorListener(this), this);
+
+		int fiveminuteticks = 20 * 60 * 5;
+		getServer().getScheduler().runTaskTimerAsynchronously(this,
+				new BukkitRunnable() {
+
+					@Override
+					public void run() {
+						getServer().broadcastMessage("STORING CACHE");
+						translator.storeCache();
+						
+
+					}
+				}, fiveminuteticks, fiveminuteticks);
 
 	}
 
