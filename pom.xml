@@ -1,14 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.idynin</groupId>
-	<artifactId>MCUniversalTranslator</artifactId>
+	<artifactId>MinecraftUniversalTranslator</artifactId>
+	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
+	<name>MinecraftUniversalTranslator</name>
+	<url></url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<craftbukkit.version>LATEST</craftbukkit.version>
-		<build.number>Unknown</build.number>
-		<BUILD_NUMBER>Unknown</BUILD_NUMBER>
 	</properties>
 
 	<repositories>
@@ -52,7 +54,7 @@
 				<version>2.0.6</version>
 				<executions>
 					<execution>
-						<phase>package</phase>
+						<phase>deploy</phase>
 						<goals>
 							<goal>proguard</goal>
 						</goals>
@@ -61,11 +63,17 @@
 				<configuration>
 					<options>
 						<option>-allowaccessmodification</option>
-						<option>-keep public class * extends org.apache.commons.lang3.**</option>
-						<option>-keep public class * extends com.google.gson.**</option>
-						<option>-keep public class * implements org.bukkit.event.Listener {*;}</option>
-						<option>-keep public class * extends org.bukkit.plugin.java.JavaPlugin {*;}</option>
-						<option>-optimizationpasses 1</option>
+						<option>-keep public class * extends org.apache.**</option>
+						<option>-keep public class * extends com.google.**</option>
+						<option>-keep public class * implements org.bukkit.** {*;}</option>
+						<option>-keepclasseswithmembers public class * {
+							public static void
+							main(java.lang.String[]);
+							}</option>
+						<option>-dontwarn sun.misc.Unsafe</option>
+						<option>-dontwarn com.google.common.collect.MinMaxPriorityQueue</option>
+						<option>-dontoptimize</option>
+						<option>-dontobfuscate</option>
 						<option>-overloadaggressively</option>
 						<option>-repackageclasses ''</option>
 						<option>-dontusemixedcaseclassnames</option>
@@ -105,9 +113,14 @@
 			<version>2.2.2</version>
 		</dependency>
 		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>12.0</version>
+		</dependency>
+		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>1.7</version>
+			<version>1.6</version>
 		</dependency>
 	</dependencies>
 </project>
