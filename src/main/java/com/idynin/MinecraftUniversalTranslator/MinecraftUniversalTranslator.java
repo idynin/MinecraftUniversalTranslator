@@ -8,28 +8,22 @@ import com.idynin.GoogleTranslateAPI.Translator;
 
 public class MinecraftUniversalTranslator extends JavaPlugin {
 
-	private final MinecraftUniversalTranslatorCommandExecutor commandExecutor = new MinecraftUniversalTranslatorCommandExecutor(
-			this);
-	private final MinecraftUniversalTranslatorEventListener eventListener = new MinecraftUniversalTranslatorEventListener(
-			this);
-	private final Translator translator = new Translator(getDataFolder());
+	private MinecraftUniversalTranslatorCommandExecutor commandExecutor;
+	private MinecraftUniversalTranslatorEventListener eventListener;
+	private Translator translator;
 
 	public Translator getTranslator() {
 		return translator;
 	}
 
-	// 20 ticks in 1 second.
-	private final static int SECOND = 20;
-	private final static int MINUTE = SECOND * 60;
-	private final static int FIVEMINUTES = MINUTE * 5;
-	private final static int FIFTEENMINUTES = FIVEMINUTES * 3;
-	private final static int HALFHOUR = FIFTEENMINUTES * 2;
-	private final static int HOUR = HALFHOUR * 2;
-
 	@Override
 	public void onEnable() {
 		getLogger().info("TestPlugin: onEnable()");
 		PluginManager pm = this.getServer().getPluginManager();
+
+		translator = new Translator(getDataFolder());
+		commandExecutor = new MinecraftUniversalTranslatorCommandExecutor(this);
+		eventListener = new MinecraftUniversalTranslatorEventListener(this);
 
 		pm.registerEvents(eventListener, this);
 
@@ -39,8 +33,8 @@ public class MinecraftUniversalTranslator extends JavaPlugin {
 
 		this.saveDefaultConfig();
 
-		cacheStoreTask.runTaskTimerAsynchronously(this, FIVEMINUTES,
-				FIVEMINUTES);
+		cacheStoreTask.runTaskTimerAsynchronously(this, TickTime.FIVEMINUTES,
+				TickTime.FIVEMINUTES);
 
 	}
 
@@ -56,7 +50,7 @@ public class MinecraftUniversalTranslator extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		getServer().getLogger().info("TestPlugin: onDisable()");
+		getLogger().info("TestPlugin: onDisable()");
 
 		cacheStoreTask.cancel();
 		translator.destroy();

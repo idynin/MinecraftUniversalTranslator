@@ -1,7 +1,7 @@
 MinecraftUniversalTranslator ver. 0.0.1-SNAPSHOT
 ======
 
-Author: ${user.name}
+Author: idynin
 Facilitates automatic translation in Minecraft.
 
 This is a plug-in for the Bukkit API. It requires a CraftBukkit server.

@@ -1,19 +1,23 @@
 # http://wiki.bukkit.org/Plugin_YAML
 name: MinecraftUniversalTranslator
-main: com.idynin.MinecraftUniversalTranslator.MinecraftUniversalTranslator
 version: 0.0.1-SNAPSHOT
-author: idynin
 description: Facilitates automatic translation in Minecraft.
+author: idynin
+
+main: com.idynin.MinecraftUniversalTranslator.MinecraftUniversalTranslator
+database: true
 
 commands:
-  command1:
-    description: description
-    usage: /<command> parameters
-    permission: MinecraftUniversalTranslator.<command>
-    permission-message: You don't have <permission>
-  command2:
-    description: description
-    usage: /<command> parameters
+  mut:
+    description: The Minecraft Universal Translator
+    usage: |
+      /<command> [parameter]
+      Parameters:
+        tl <language> - sets target language to <language>
+          <language> may be either two letter code or full name
+        storecache - stores translation cache to datastore
+        clearcache - clears translation cache and datastore
+    aliases: [tr, translator]
     permission: MinecraftUniversalTranslator.<command>
     permission-message: You don't have <permission>
 
@@ -22,5 +26,8 @@ permissions:
     description: Grants all permissions of MinecraftUniversalTranslator.
     default: op
     children:
-      MinecraftUniversalTranslator.command:
-        description: Gives permission for command.
+      MinecraftUniversalTranslator.mut: true
+      
+  MinecraftUniversalTranslator.mut:
+    description: The Minecraft Universal Translator
+    default: true

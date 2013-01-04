@@ -1,2 +1,7 @@
 # http://wiki.bukkit.org/Configuration_API_Reference
-key: value
+datastore: flatfile
+mysql_address: localhost
+mysql_dbname: mcut_db
+mysql_tableprefix: mcut_
+mysql_user: username
+mysql_pass: password

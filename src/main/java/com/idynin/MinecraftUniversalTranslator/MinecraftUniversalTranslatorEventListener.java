@@ -26,27 +26,18 @@ public class MinecraftUniversalTranslatorEventListener implements Listener {
 				"Caught Message: " + event.getMessage());
 		final String message = new String(event.getMessage());
 		final Player player = event.getPlayer();
-		plugin.getServer().getScheduler()
-				.runTaskAsynchronously(plugin, new Runnable() {
-					@Override
-					public void run() {
-						plugin.getTranslator().autoTranslate(message);
-						if (plugin
-								.getTranslator()
-								.getLastDetectedLanguage()
-								.equals(plugin.getTranslator()
-										.getTargetLanguage())) {
-							return;
-						}
-						for (Player r : event.getRecipients()) {
-							r.sendMessage(player.getDisplayName()
-									+ ": "
-									+ plugin.getTranslator().autoTranslate(
-											message));
 
-						}
-					}
-				});
+		plugin.getTranslator().autoTranslate(message);
+		if (plugin.getTranslator().getLastDetectedLanguage()
+				.equals(plugin.getTranslator().getTargetLanguage())) {
+			return;
+		}
+		for (Player r : event.getRecipients()) {
+			r.sendMessage(player.getDisplayName() + ": "
+					+ plugin.getTranslator().autoTranslate(message));
+
+		}
 
 	}
+
 }
