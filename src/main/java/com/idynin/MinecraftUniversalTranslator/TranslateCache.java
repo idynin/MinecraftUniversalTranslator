@@ -1,4 +1,4 @@
-package com.idynin.GoogleTranslateAPI;
+package com.idynin.MinecraftUniversalTranslator;
 
 public interface TranslateCache {
 	public boolean contains(String source);

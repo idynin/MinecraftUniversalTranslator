@@ -19,6 +19,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import com.idynin.MinecraftUniversalTranslator.FlatFileTranslateCache;
+import com.idynin.MinecraftUniversalTranslator.TranslateCache;
 
 public class Translator {
 

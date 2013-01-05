@@ -1,4 +1,4 @@
-package com.idynin.GoogleTranslateAPI;
+package com.idynin.MinecraftUniversalTranslator;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

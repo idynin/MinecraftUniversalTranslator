@@ -22,14 +22,25 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>external_plugins</name>
-			<type>2</type>
-			<location>C:/minecraft_server_dev/plugins</location>
-		</link>
-		<link>
 			<name>run_server.bat</name>
 			<type>1</type>
 			<location>C:/minecraft_server_dev/run_server.bat</location>
 		</link>
+		<link>
+			<name>update</name>
+			<type>2</type>
+			<location>C:/minecraft_server_dev/update</location>
+		</link>
 	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1357360546408</id>
+			<name>update</name>
+			<type>13</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-*.jar</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>
