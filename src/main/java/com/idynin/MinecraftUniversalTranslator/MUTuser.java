@@ -1,22 +1,24 @@
-package com.idynin.GoogleTranslateAPI;
+package com.idynin.MinecraftUniversalTranslator;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-class mutUser {
+import com.idynin.GoogleTranslateAPI.Language;
+
+class MUTuser {
 
 	static final Language defaultlanguage = Language.ENGLISH;
 
-	mutUser(String uid) {
+	MUTuser(String uid) {
 		this(uid, defaultlanguage);
 	}
 
-	mutUser(String uid, Language lang) {
+	MUTuser(String uid, Language lang) {
 		this(uid, lang, lang);
 	}
 
-	mutUser(String uid, Language primLang, Language prefLang) {
+	MUTuser(String uid, Language primLang, Language prefLang) {
 		this.uid = uid;
 		this.primaryLanguage = primLang;
 		this.preferedLanguage = prefLang;

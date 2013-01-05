@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 // See http://jd.bukkit.org/apidocs/ for a full event list.
 // http://wiki.bukkit.org/Event_API_Reference
@@ -27,17 +28,22 @@ public class MinecraftUniversalTranslatorEventListener implements Listener {
 		final String message = new String(event.getMessage());
 		final Player player = event.getPlayer();
 
-		plugin.getTranslator().autoTranslate(message);
-		if (plugin.getTranslator().getLastDetectedLanguage()
-				.equals(plugin.getTranslator().getTargetLanguage())) {
-			return;
-		}
-		for (Player r : event.getRecipients()) {
-			r.sendMessage(player.getDisplayName() + ": "
-					+ plugin.getTranslator().autoTranslate(message));
+		new BukkitRunnable() {
 
-		}
+			@Override
+			public void run() {
+				plugin.getTranslator().autoTranslate(message);
+				if (plugin.getTranslator().getLastDetectedLanguage()
+						.equals(plugin.getTranslator().getTargetLanguage())) {
+					return;
+				}
+				for (Player r : event.getRecipients()) {
+					r.sendMessage(player.getDisplayName() + ": "
+							+ plugin.getTranslator().autoTranslate(message));
+
+				}
+			}
+		}.runTaskAsynchronously(plugin);
 
 	}
-
 }

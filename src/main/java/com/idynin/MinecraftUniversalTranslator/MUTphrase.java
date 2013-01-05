@@ -1,20 +1,21 @@
-package com.idynin.GoogleTranslateAPI;
+package com.idynin.MinecraftUniversalTranslator;
 
 import com.google.gson.Gson;
+import com.idynin.GoogleTranslateAPI.Language;
 
-public class mutPhrase {
+public class MUTphrase {
 	String phrase;
 	Language lang;
 
-	public mutPhrase(String phrase, Language lang) {
+	public MUTphrase(String phrase, Language lang) {
 		this.phrase = phrase;
 		this.lang = lang;
 	}
 
 	@Override
 	public boolean equals(Object arg0) {
-		if (arg0 instanceof mutPhrase) {
-			mutPhrase m = (mutPhrase) arg0;
+		if (arg0 instanceof MUTphrase) {
+			MUTphrase m = (MUTphrase) arg0;
 			if (this.lang == m.lang && this.phrase.equals(m.phrase))
 				return true;
 		}
@@ -25,7 +26,7 @@ public class mutPhrase {
 		return new Gson().toJson(this);
 	}
 	public static void main(String[] args) {
-		mutPhrase m = new mutPhrase("Hello World!", Language.ENGLISH);
+		MUTphrase m = new MUTphrase("Hello World!", Language.ENGLISH);
 		System.out.println(m.asJson());
 	}
 }

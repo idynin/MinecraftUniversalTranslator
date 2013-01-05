@@ -1,16 +1,16 @@
-package com.idynin.GoogleTranslateAPI;
+package com.idynin.MinecraftUniversalTranslator;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class mysqlMUTbackend implements mutBackend {
+public class MySQLMUTbackend implements MUTbackend {
 
 	private Connection conn;
 
 	private String address, database, username, password;
 
-	public mysqlMUTbackend(String address, String database, String username,
+	public MySQLMUTbackend(String address, String database, String username,
 			String password) {
 		this.address = "jdbc:mysql://" + address + "/" + database
 				+ "?useUnicode=yes&characterEncoding=utf8";
@@ -41,31 +41,31 @@ public class mysqlMUTbackend implements mutBackend {
 	}
 
 	@Override
-	public void putTranslation(mutTranslation m) {
+	public void putTranslation(MUTtranslation m) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void putUser(mutUser m) {
+	public void putUser(MUTuser m) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public mutTranslation getTranslation(String s) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public mutTranslation getTranslation(mutPhrase s) {
+	public MUTtranslation getTranslation(String s) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public mutUser getUser(String uid) {
+	public MUTtranslation getTranslation(MUTphrase s) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MUTuser getUser(String uid) {
 		// TODO Auto-generated method stub
 		return null;
 	}

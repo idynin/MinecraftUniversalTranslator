@@ -1,10 +1,11 @@
-package com.idynin.GoogleTranslateAPI;
+package com.idynin.MinecraftUniversalTranslator;
 
 import com.google.gson.Gson;
+import com.idynin.GoogleTranslateAPI.Language;
 
-class mutTranslation implements Comparable<mutTranslation> {
-	mutPhrase source;
-	mutPhrase target;
+class MUTtranslation implements Comparable<MUTtranslation> {
+	MUTphrase source;
+	MUTphrase target;
 
 	Language sourceLanguage;
 	Language targetLanguage;
@@ -19,7 +20,7 @@ class mutTranslation implements Comparable<mutTranslation> {
 		return hits;
 	}
 
-	public mutTranslation(mutPhrase s, mutPhrase t) {
+	public MUTtranslation(MUTphrase s, MUTphrase t) {
 		this.source = s;
 		this.target = t;
 		this.sourceLanguage = s.lang;
@@ -30,8 +31,8 @@ class mutTranslation implements Comparable<mutTranslation> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof mutTranslation) {
-			mutTranslation m = (mutTranslation) obj;
+		if (obj instanceof MUTtranslation) {
+			MUTtranslation m = (MUTtranslation) obj;
 			if (m.source.equals(this.source) && m.target.equals(this.target))
 				return true;
 		}
@@ -39,7 +40,7 @@ class mutTranslation implements Comparable<mutTranslation> {
 	}
 
 	@Override
-	public int compareTo(mutTranslation arg0) {
+	public int compareTo(MUTtranslation arg0) {
 		return Integer.valueOf(hits).compareTo(arg0.hits);
 	}
 
@@ -48,10 +49,10 @@ class mutTranslation implements Comparable<mutTranslation> {
 	}
 
 	public static void main(String[] args) {
-		mutPhrase p1 = new mutPhrase("Hello World!", Language.ENGLISH);
-		mutPhrase p2 = new mutPhrase("Bonjour le monde", Language.FRENCH);
+		MUTphrase p1 = new MUTphrase("Hello World!", Language.ENGLISH);
+		MUTphrase p2 = new MUTphrase("Bonjour le monde", Language.FRENCH);
 
-		mutTranslation m = new mutTranslation(p1, p2);
+		MUTtranslation m = new MUTtranslation(p1, p2);
 		System.out.println(m.asJson());
 	}
 }
