@@ -21,12 +21,6 @@ public class MySQLMUTbackend implements MUTbackend {
 
 	}
 
-	private void initializeDatabase() {
-		connect();
-		
-		//TODO: Create Tables method
-	}
-
 	private void connect() {
 		try {
 			if (conn == null || conn.isClosed()) {
@@ -41,15 +35,9 @@ public class MySQLMUTbackend implements MUTbackend {
 	}
 
 	@Override
-	public void putTranslation(MUTtranslation m) {
+	public MUTtranslation getTranslation(MUTphrase s) {
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void putUser(MUTuser m) {
-		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
@@ -59,15 +47,27 @@ public class MySQLMUTbackend implements MUTbackend {
 	}
 
 	@Override
-	public MUTtranslation getTranslation(MUTphrase s) {
+	public MUTuser getUser(String uid) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	private void initializeDatabase() {
+		connect();
+
+		// TODO: Create Tables method
+	}
+
 	@Override
-	public MUTuser getUser(String uid) {
+	public void putTranslation(MUTtranslation m) {
 		// TODO Auto-generated method stub
-		return null;
+
+	}
+
+	@Override
+	public void putUser(MUTuser m) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

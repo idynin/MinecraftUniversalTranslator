@@ -2,9 +2,6 @@ package com.idynin.MinecraftUniversalTranslator;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
-
 
 public class MUTdatastore {
 	private enum dsLoc {
@@ -25,13 +22,17 @@ public class MUTdatastore {
 
 	long requests = 0, commonCacheHits = 0, recentCacheHits = 0;
 
-	public void put(MUTtranslation s) {
-		putCache(s);
-		putBackend(s);
-	}
-
 	public boolean contains(String s) {
 		return !(getLocation(s) == dsLoc.NONE);
+	}
+
+	public MUTtranslation get(String s) {
+		dsLoc loc = getLocation(s);
+		if (loc != dsLoc.NONE) {
+			// TODO return translation
+		}
+		return null;
+
 	}
 
 	private dsLoc getLocation(String s) {
@@ -47,25 +48,22 @@ public class MUTdatastore {
 		return dsLoc.NONE;
 	}
 
-	public MUTtranslation get(String s) {
-		dsLoc loc = getLocation(s);
-		if(loc != dsLoc.NONE){
-			//TODO return translation
-		}
-		return null;
-		
-	}
-
-	private void putCache(MUTtranslation s) {
-		//TODO
+	public void put(MUTtranslation s) {
+		putCache(s);
+		putBackend(s);
 	}
 
 	private void putBackend(MUTtranslation s) {
 		new Thread() {
+			@Override
 			public void run() {
-				//TODO async backend
+				// TODO async backend
 			};
 		}.run();
+	}
+
+	private void putCache(MUTtranslation s) {
+		// TODO
 	}
 
 }

@@ -1,5 +1,6 @@
-package com.idynin.GoogleTranslateAPI;
+package com.idynin.TranslateAPI;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.TreeMap;
 
@@ -22,20 +23,22 @@ public enum Language {
 			"sv"), TAMIL("ta"), TELUGU("te"), THAI("th"), TURKISH("tr"), UKRAINIAN(
 			"uk"), URDU("ur"), VIETNAMESE("vi"), WELSH("cy"), YIDDISH("yi");
 
-	public String code;
+	public static Language[] getAllLanguages() {
 
-	Language(String code) {
-		this.code = code;
+		Language[] allLanguages = Language.values();
+		Arrays.sort(allLanguages);
+
+		return allLanguages;
 	}
 
-	public static Language getBestLanguage(String s) {
+	public static Language getBestMatch(String s) {
 		if (s.length() < 3 || s.contains("-")) {
-			return getBestLanguageByCode(s);
+			return getBestMatchByCode(s);
 		}
-		return getBestLanguageByName(s);
+		return getBestMatchByName(s);
 	}
 
-	public static Language getBestLanguageByCode(String s) {
+	public static Language getBestMatchByCode(String s) {
 		s = s.toLowerCase();
 
 		int temp;
@@ -63,8 +66,8 @@ public enum Language {
 		return distancemap.firstEntry().getValue().getFirst();
 	}
 
-	public static Language getBestLanguageByName(String s) {
-		s = s.toLowerCase();
+	public static Language getBestMatchByName(String s) {
+		s = s.toUpperCase();
 
 		int temp;
 
@@ -73,8 +76,7 @@ public enum Language {
 		LinkedList<Language> templist;
 		for (Language lang : values()) {
 
-			temp = StringUtils.getLevenshteinDistance(s, lang.name()
-					.toLowerCase());
+			temp = StringUtils.getLevenshteinDistance(s, lang.name());
 
 			if (distancemap.containsKey(temp)) {
 				templist = distancemap.get(temp);
@@ -89,5 +91,11 @@ public enum Language {
 		System.out.println(distancemap);
 
 		return distancemap.firstEntry().getValue().getFirst();
+	}
+
+	public String code;
+
+	Language(String code) {
+		this.code = code;
 	}
 }

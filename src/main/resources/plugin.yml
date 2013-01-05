@@ -2,7 +2,7 @@
 name: MinecraftUniversalTranslator
 version: 0.0.1-SNAPSHOT
 description: Facilitates automatic translation in Minecraft.
-author: idynin
+author: purevoxel
 
 main: com.idynin.MinecraftUniversalTranslator.MinecraftUniversalTranslator
 database: true

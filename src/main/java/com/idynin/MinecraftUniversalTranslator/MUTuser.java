@@ -4,11 +4,23 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import com.idynin.GoogleTranslateAPI.Language;
+import com.idynin.TranslateAPI.Language;
 
 class MUTuser {
 
 	static final Language defaultlanguage = Language.ENGLISH;
+
+	String uid;
+
+	HashMap<Language, Integer> languageMap;
+
+	Language primaryLanguage = Language.ENGLISH;
+
+	Language preferedLanguage = Language.ENGLISH;
+
+	Integer primValue = 0;
+
+	float primCertainty = 0;
 
 	MUTuser(String uid) {
 		this(uid, defaultlanguage);
@@ -23,16 +35,6 @@ class MUTuser {
 		this.primaryLanguage = primLang;
 		this.preferedLanguage = prefLang;
 	}
-
-	String uid;
-
-	HashMap<Language, Integer> languageMap;
-
-	Language primaryLanguage = Language.ENGLISH;
-	Language preferedLanguage = Language.ENGLISH;
-
-	Integer primValue = 0;
-	float primCertainty = 0;
 
 	void refreshPrimaryLanguage() {
 		Iterator<Entry<Language, Integer>> it = languageMap.entrySet()

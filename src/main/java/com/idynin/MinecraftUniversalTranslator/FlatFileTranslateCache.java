@@ -27,6 +27,12 @@ public class FlatFileTranslateCache implements TranslateCache {
 	}
 
 	@Override
+	public void clearCache() {
+		translationCache = new HashMap<String, String>();
+		this.storeCache();
+	}
+
+	@Override
 	public boolean contains(String source) {
 		return translationCache.containsKey(source);
 	}
@@ -37,28 +43,6 @@ public class FlatFileTranslateCache implements TranslateCache {
 	}
 
 	@Override
-	public String store(String source, String language, String result) {
-		return translationCache.put(source, language + ":" + result);
-
-	}
-
-	public void storeCache() {
-
-		try {
-			FileOutputStream fos = new FileOutputStream(cacheFile);
-			ObjectOutputStream oos = new ObjectOutputStream(
-					new BufferedOutputStream(new GZIPOutputStream(fos)));
-
-			oos.writeObject(translationCache);
-			oos.flush();
-			oos.close();
-			fos.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	@SuppressWarnings("unchecked")
 	public void loadCache() {
 
@@ -82,9 +66,27 @@ public class FlatFileTranslateCache implements TranslateCache {
 	}
 
 	@Override
-	public void clearCache() {
-		translationCache = new HashMap<String, String>();
-		this.storeCache();
+	public String store(String source, String language, String result) {
+		return translationCache.put(source, language + ":" + result);
+
+	}
+
+	@Override
+	public void storeCache() {
+
+		try {
+			FileOutputStream fos = new FileOutputStream(cacheFile);
+			ObjectOutputStream oos = new ObjectOutputStream(
+					new BufferedOutputStream(new GZIPOutputStream(fos)));
+
+			oos.writeObject(translationCache);
+			oos.flush();
+			oos.close();
+			fos.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

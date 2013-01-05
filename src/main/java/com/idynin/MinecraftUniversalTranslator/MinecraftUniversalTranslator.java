@@ -1,24 +1,82 @@
 package com.idynin.MinecraftUniversalTranslator;
 
+import java.io.File;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Server;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.idynin.GoogleTranslateAPI.Translator;
+import com.idynin.TranslateAPI.Translator;
 
 public class MinecraftUniversalTranslator extends JavaPlugin {
+
+	private boolean debug = false;
 
 	private MinecraftUniversalTranslatorCommandExecutor commandExecutor;
 	private MinecraftUniversalTranslatorEventListener eventListener;
 	private Translator translator;
+
+	protected FileConfiguration config;
+
+	private File pluginFile;
+
+	private File pluginUpdateFile;
+
+	private MinecraftUniversalTranslator plugin;
+
+	private BukkitRunnable pluginUpdateDetector = new BukkitRunnable() {
+
+		@Override
+		public void run() {
+			if (pluginUpdateFile.exists()) {
+				this.cancel();
+				getLogger().info("Found update, updating...");
+
+				new BukkitRunnable() {
+
+					@Override
+					public void run() {
+						Bukkit.reload();
+
+					}
+				}.runTask(plugin);
+			}
+		}
+	};
+
+	private BukkitRunnable cacheStoreTask = new BukkitRunnable() {
+
+		@Override
+		public void run() {
+			getServer().broadcast(
+					"" + ChatColor.RED + ChatColor.ITALIC
+							+ "        STORING CACHE",
+					Server.BROADCAST_CHANNEL_ADMINISTRATIVE);
+			translator.storeCache();
+
+		}
+	};
 
 	public Translator getTranslator() {
 		return translator;
 	}
 
 	@Override
+	public void onDisable() {
+		pluginUpdateDetector.cancel();
+		cacheStoreTask.cancel();
+
+		translator.destroy();
+	}
+
+	@Override
 	public void onEnable() {
-		getLogger().info("TestPlugin: onEnable()");
+		plugin = this;
+
 		PluginManager pm = this.getServer().getPluginManager();
 
 		translator = new Translator(getDataFolder());
@@ -31,28 +89,34 @@ public class MinecraftUniversalTranslator extends JavaPlugin {
 			getCommand(command).setExecutor(commandExecutor);
 		}
 
-		this.saveDefaultConfig();
+		saveDefaultConfig();
 
-		cacheStoreTask.runTaskTimerAsynchronously(this, TickTime.FIVEMINUTES,
+		config = this.getConfig();
+		if (config.isSet("debug")) {
+			this.debug = config.getBoolean("debug");
+		}
+
+		cacheStoreTask.runTaskTimerAsynchronously(this, TickTime.MINUTE,
 				TickTime.FIVEMINUTES);
 
-	}
+		if (debug) {
 
-	private BukkitRunnable cacheStoreTask = new BukkitRunnable() {
+			pluginFile = getFile();
 
-		@Override
-		public void run() {
-			getServer().broadcastMessage("STORING CACHE");
-			translator.storeCache();
+			pluginUpdateFile = new File(pluginFile.getParentFile()
+					.getAbsoluteFile() + "/update/" + pluginFile.getName());
 
+			pluginUpdateDetector.runTaskTimerAsynchronously(this,
+					TickTime.SECOND, TickTime.SECOND * 2);
+
+			getServer()
+					.broadcast(
+							""
+									+ ChatColor.GREEN
+									+ ChatColor.ITALIC
+									+ "--     New Version of Minecraft Universal Translator Loaded!",
+							Server.BROADCAST_CHANNEL_USERS);
 		}
-	};
 
-	@Override
-	public void onDisable() {
-		getLogger().info("TestPlugin: onDisable()");
-
-		cacheStoreTask.cancel();
-		translator.destroy();
 	}
 }

@@ -5,10 +5,12 @@
 <booleanAttribute key="M2_NON_RECURSIVE" value="false"/>
 <booleanAttribute key="M2_OFFLINE" value="false"/>
 <stringAttribute key="M2_PROFILES" value=""/>
-<listAttribute key="M2_PROPERTIES"/>
+<listAttribute key="M2_PROPERTIES">
+<listEntry value="minecraft.plugin.update.directory=C:\minecraft_server_dev\plugins\update"/>
+</listAttribute>
 <stringAttribute key="M2_RUNTIME" value="EMBEDDED"/>
-<booleanAttribute key="M2_SKIP_TESTS" value="false"/>
-<booleanAttribute key="M2_UPDATE_SNAPSHOTS" value="true"/>
+<booleanAttribute key="M2_SKIP_TESTS" value="true"/>
+<booleanAttribute key="M2_UPDATE_SNAPSHOTS" value="false"/>
 <booleanAttribute key="M2_WORKSPACE_RESOLUTION" value="false"/>
 <stringAttribute key="org.eclipse.debug.core.ATTR_REFRESH_SCOPE" value="${project}"/>
 <stringAttribute key="org.eclipse.debug.ui.ATTR_CONSOLE_ENCODING" value="UTF-8"/>

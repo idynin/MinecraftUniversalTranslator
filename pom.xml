@@ -61,31 +61,48 @@
 					</execution>
 				</executions>
 				<configuration>
+					<proguard>
+						<skip>false</skip>
+					</proguard>
+
 					<options>
-						<option>-allowaccessmodification</option>
-						<option>-keep public class * extends org.apache.**</option>
-						<option>-keep public class * extends com.google.**</option>
-						<option>-keep public class * implements org.bukkit.** {*;}</option>
-						<option>-keepclasseswithmembers public class * {
-							public static void
-							main(java.lang.String[]);
-							}</option>
-						<option>-dontwarn sun.misc.Unsafe</option>
-						<option>-dontwarn com.google.common.collect.MinMaxPriorityQueue</option>
-						<option>-dontoptimize</option>
-						<option>-dontobfuscate</option>
-						<option>-overloadaggressively</option>
-						<option>-repackageclasses ''</option>
-						<option>-dontusemixedcaseclassnames</option>
-						<option>-keepattributes *Annotation*,EventHandler</option>
+						<option>@proguard.cfg</option>
 					</options>
+
 					<libs>
 						<lib>${java.home}/lib/rt.jar</lib>
 					</libs>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<configuration>
+							<target>
+
+								<delete
+									file="${minecraft.plugin.update.directory}/${project.build.directory}/${project.build.finalName}.${project.packaging}" />
+
+								<copy todir="${minecraft.plugin.update.directory}">
+									<fileset dir="${project.build.directory}"
+										includes="${project.build.finalName}.${project.packaging}" />
+								</copy>
+
+
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
+
 
 	<dependencies>
 
@@ -113,14 +130,14 @@
 			<version>2.2.2</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>12.0</version>
-		</dependency>
-		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>14.0-rc1</version>
 		</dependency>
 	</dependencies>
 </project>
