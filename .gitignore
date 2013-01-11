@@ -1,4 +1,5 @@
 /target
 /external_plugins
 /update
+/testoutdir
 run_server.bat

@@ -1,20 +1,19 @@
 package com.idynin.TranslateAPI.net;
 
-import java.io.InputStream;
-
 public class Response {
-	private InputStream stream;
+	private String contents;
 	private int id;
 
-	public Response(InputStream stream, int id) {
-		this.stream = stream;
+	public Response(String contents, int id) {
+		this.contents = contents;
+		this.id = id;
 	}
 
 	public int getId() {
 		return id;
 	}
-
-	public InputStream getInputStream() {
-		return stream;
+	
+	public String getContents() {
+		return contents;
 	}
 }

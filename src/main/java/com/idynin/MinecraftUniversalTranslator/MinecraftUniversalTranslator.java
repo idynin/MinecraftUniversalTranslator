@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.idynin.TranslateAPI.Translator;
+import com.idynin.TranslateAPI.adapters.GoogleTranslatorAdapter;
 
 public class MinecraftUniversalTranslator extends JavaPlugin {
 
@@ -54,9 +55,9 @@ public class MinecraftUniversalTranslator extends JavaPlugin {
 		public void run() {
 			getServer().broadcast(
 					"" + ChatColor.RED + ChatColor.ITALIC
-							+ "        STORING CACHE",
+							+ "        NOT STORING CACHE",
 					Server.BROADCAST_CHANNEL_ADMINISTRATIVE);
-			translator.storeCache();
+			//translator.storeCache();
 
 		}
 	};
@@ -70,7 +71,7 @@ public class MinecraftUniversalTranslator extends JavaPlugin {
 		pluginUpdateDetector.cancel();
 		cacheStoreTask.cancel();
 
-		translator.destroy();
+		//translator.destroy();
 	}
 
 	@Override
@@ -79,7 +80,8 @@ public class MinecraftUniversalTranslator extends JavaPlugin {
 
 		PluginManager pm = this.getServer().getPluginManager();
 
-		translator = new Translator(getDataFolder());
+		//translator = new Translator(getDataFolder());
+		translator = new Translator(new GoogleTranslatorAdapter());
 		commandExecutor = new MinecraftUniversalTranslatorCommandExecutor(this);
 		eventListener = new MinecraftUniversalTranslatorEventListener(this);
 

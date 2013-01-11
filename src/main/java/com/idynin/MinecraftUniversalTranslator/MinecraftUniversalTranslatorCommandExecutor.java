@@ -50,11 +50,11 @@ public class MinecraftUniversalTranslatorCommandExecutor implements
 			// 1 arg commands
 			else if (args.length == 1) {
 				if (args[0].equalsIgnoreCase("storecache")) {
-					plugin.getTranslator().storeCache();
-					outputMessage += "Stored cache";
+					//plugin.getTranslator().storeCache();
+					outputMessage += "not Stored cache";
 				} else if (args[0].equalsIgnoreCase("clearcache")) {
-					plugin.getTranslator().clearCache();
-					outputMessage += "Cleared cache";
+					//plugin.getTranslator().clearCache();
+					outputMessage += "not Cleared cache";
 				}
 			}
 			plugin.getServer().broadcastMessage(outputMessage);

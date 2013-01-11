@@ -1,22 +1,20 @@
 package com.idynin.TranslateAPI.adapters;
 
+import java.util.EnumSet;
 import java.util.List;
 
 import com.idynin.TranslateAPI.Language;
-import com.idynin.TranslateAPI.net.TranslationQuery;
-import com.idynin.TranslateAPI.net.TranslationResponse;
+import com.idynin.TranslateAPI.TranslationQuery;
+import com.idynin.TranslateAPI.Translation;
 
 public abstract class TranslatorAdapter {
 
-	public abstract Language getDetectedLanguage();
-
-	public abstract Language[] getSupportedLanguages();
+	public abstract EnumSet<Language> getSupportedLanguages();
 
 	public abstract boolean isLanguageSupported(Language language);
 
-	public abstract List<TranslationResponse> translate(
-			List<TranslationQuery> queryList);
+	public abstract List<Translation> translate(List<TranslationQuery> queryList);
 
-	public abstract String translate(String text, Language fromLanguage,
+	public abstract Translation translate(String text, Language fromLanguage,
 			Language toLanguage);
 }

@@ -1,8 +1,15 @@
 package com.idynin.TranslateAPI.net;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.util.concurrent.Callable;
+
+import org.apache.commons.codec.CharEncoding;
+import org.apache.commons.lang.CharSet;
 
 public class Request implements Callable<Response> {
 	private URL url;
@@ -19,9 +26,18 @@ public class Request implements Callable<Response> {
 	}
 
 	@Override
-	public Response call() throws Exception {
+	public Response call() throws IOException {
 		URLConnection urlc = url.openConnection();
 		urlc.setRequestProperty("User-Agent", NetHandler.getUserAgent());
-		return new Response(urlc.getInputStream(), id);
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				urlc.getInputStream(), CharEncoding.UTF_8));
+		String output = "", line;
+
+		while ((line = br.readLine()) != null) {
+			output += line;
+		}
+
+		return new Response(output, id);
 	}
 }

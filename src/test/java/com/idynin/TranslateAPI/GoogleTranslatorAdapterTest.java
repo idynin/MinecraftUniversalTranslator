@@ -3,9 +3,12 @@
  */
 package com.idynin.TranslateAPI;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -54,10 +57,9 @@ public class GoogleTranslatorAdapterTest {
 	 */
 	@Test
 	public final void testGetDetectedLanguage() {
-		gta.translate(inPhrase, sourceLang, targetLang);
+		Translation result = gta.translate(inPhrase, sourceLang, targetLang);
 		assertEquals(Thread.currentThread().getStackTrace()[1].getMethodName(),
-				realSourceLang, gta.getDetectedLanguage());
-		// fail("Not yet implemented"); // TODO
+				realSourceLang, result.getFromLanguage());
 	}
 
 	/**
@@ -67,11 +69,8 @@ public class GoogleTranslatorAdapterTest {
 	 */
 	@Test
 	public final void testGetSuportedLanguages() {
-		assertArrayEquals(
-				Thread.currentThread().getStackTrace()[1].getMethodName(),
-				Language.getAllLanguages(), gta.getSupportedLanguages());
-
-		// fail("Not yet implemented"); // TODO
+		assertTrue("testGetSuportedLanguages", gta.getSupportedLanguages()
+				.containsAll(EnumSet.allOf(Language.class)));
 	}
 
 	/**
@@ -84,7 +83,6 @@ public class GoogleTranslatorAdapterTest {
 		for (Language lang : Language.values()) {
 			assertTrue("Contains " + lang.name(), gta.isLanguageSupported(lang));
 		}
-		// fail("Not yet implemented"); // TODO
 	}
 
 	/**
@@ -94,9 +92,49 @@ public class GoogleTranslatorAdapterTest {
 	 */
 	@Test
 	public final void testTranslate() {
-		String output = gta.translate(inPhrase, sourceLang, targetLang);
-		assertEquals("ExpectedTranslation", outPhrase, output);
-		// fail("Not yet implemented"); // TODO
+		Translation output = gta.translate(inPhrase, sourceLang, targetLang);
+		assertEquals("ExpectedTranslation", outPhrase,
+				output.getTranslatedText());
+	}
+
+	@Test
+	public final void testTranslateList() {
+		List<TranslationQuery> sourceList = new ArrayList<TranslationQuery>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			{
+				add(new TranslationQuery("test message",
+						Language.AUTOMATIC_DETECTION, Language.RUSSIAN));
+				add(new TranslationQuery("test message 1! and also",
+						Language.AUTOMATIC_DETECTION, Language.GERMAN));
+				add(new TranslationQuery("mmmpf lol I'm silly.",
+						Language.AUTOMATIC_DETECTION, Language.NORWEGIAN));
+			}
+		};
+		List<Translation> expectedResults = new ArrayList<Translation>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			{
+				add(new Translation("test message", "Тестовое сообщение",
+						Language.ENGLISH, Language.RUSSIAN));
+				add(new Translation("test message 1! and also",
+						"Testnachricht 1! sowie", Language.ENGLISH,
+						Language.GERMAN));
+				add(new Translation("mmmpf lol I'm silly.",
+						"mmmpf lol Jeg er dum .", Language.ENGLISH,
+						Language.NORWEGIAN));
+			}
+		};
+
+		List<Translation> actual = gta.translate(sourceList);
+
+		assertTrue("testTranslateList", expectedResults.containsAll(actual));
 	}
 
 }

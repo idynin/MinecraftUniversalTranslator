@@ -61,8 +61,6 @@ public enum Language {
 			distancemap.put(temp, templist);
 		}
 
-		System.out.println(distancemap);
-
 		return distancemap.firstEntry().getValue().getFirst();
 	}
 
@@ -87,8 +85,6 @@ public enum Language {
 			templist.add(lang);
 			distancemap.put(temp, templist);
 		}
-
-		System.out.println(distancemap);
 
 		return distancemap.firstEntry().getValue().getFirst();
 	}
