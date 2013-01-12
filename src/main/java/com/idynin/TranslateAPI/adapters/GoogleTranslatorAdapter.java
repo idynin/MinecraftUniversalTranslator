@@ -86,6 +86,9 @@ public class GoogleTranslatorAdapter extends TranslatorAdapter {
 
 		for (TranslationQuery tq : queryList) {
 			try {
+				if (tq.getFromLanguage().equals(tq.getToLanguage())) {
+					continue;
+				}
 				urls.add(constructURL(tq));
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
@@ -112,6 +115,10 @@ public class GoogleTranslatorAdapter extends TranslatorAdapter {
 	@Override
 	public Translation translate(String text, Language fromLanguage,
 			Language toLanguage) {
+
+		if (fromLanguage.equals(toLanguage)) {
+			return new Translation(text, text, fromLanguage, toLanguage);
+		}
 		try {
 			URL translateURL = constructURL(text, fromLanguage, toLanguage);
 
@@ -144,6 +151,12 @@ public class GoogleTranslatorAdapter extends TranslatorAdapter {
 		return new Translation(null, translation,
 				Language.getBestMatchByCode(je.getAsJsonArray().get(2)
 						.getAsString()), null);
+	}
+
+	@Override
+	public Translation translate(TranslationQuery query) {
+		return translate(query.getSourceText(), query.getFromLanguage(),
+				query.getToLanguage());
 	}
 
 }

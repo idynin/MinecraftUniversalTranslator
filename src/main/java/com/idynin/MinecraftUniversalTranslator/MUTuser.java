@@ -8,13 +8,13 @@ import com.idynin.TranslateAPI.Language;
 
 class MUTuser {
 
-	static final Language defaultlanguage = Language.ENGLISH;
+	static Language defaultlanguage = Language.AUTOMATIC_DETECTION;
 
 	String uid;
 
 	HashMap<Language, Integer> languageMap;
 
-	Language primaryLanguage = Language.ENGLISH;
+	Language primaryLanguage = Language.AUTOMATIC_DETECTION;
 
 	Language preferedLanguage = Language.ENGLISH;
 
@@ -36,6 +36,17 @@ class MUTuser {
 		this.preferedLanguage = prefLang;
 	}
 
+	public Language getPreferedLanguage() {
+		return preferedLanguage;
+	}
+
+	Language getPrimaryLanguage() {
+		if (primCertainty < 0.5) {
+			return defaultlanguage;
+		}
+		return primaryLanguage;
+	}
+
 	void refreshPrimaryLanguage() {
 		Iterator<Entry<Language, Integer>> it = languageMap.entrySet()
 				.iterator();
@@ -50,7 +61,25 @@ class MUTuser {
 			}
 			sum += e.getValue();
 		}
+		if (sum == 0) {
+			return;
+		}
 		primCertainty = primValue / sum;
+
+	}
+
+	public void setPreferedLanguage(Language lang) {
+		this.preferedLanguage = lang;
+	}
+
+	public void addDetectedLanguage(Language detectedLang) {
+		Integer count = languageMap.get(detectedLang);
+		if (count == null) {
+			count = 0;
+		}
+		count++;
+		languageMap.put(detectedLang, count);
+		refreshPrimaryLanguage();
 
 	}
 

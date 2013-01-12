@@ -30,7 +30,7 @@ public class MinecraftUniversalTranslatorCommandExecutor implements
 			String label, String[] args) {
 
 		if (command.getName().equalsIgnoreCase("mut")) {
-			String outputMessage = sender.getName() + " executed " + command
+			String outputMessage = sender.getName() + " executed " + command.getName()
 					+ " <" + Arrays.toString(args) + ">. ";
 
 			// 2 arg commands
@@ -40,7 +40,7 @@ public class MinecraftUniversalTranslatorCommandExecutor implements
 					// change target language
 
 					Language lang = Language.getBestMatch(args[1]);
-					plugin.getTranslator().setTargetLanguage(lang);
+					plugin.getPlayerManager().get(sender.getName()).setPreferedLanguage(lang);
 
 					outputMessage += "Set target language to: " + lang;
 

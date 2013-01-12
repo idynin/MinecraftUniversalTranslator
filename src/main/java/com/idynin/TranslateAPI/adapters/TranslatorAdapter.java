@@ -17,4 +17,6 @@ public abstract class TranslatorAdapter {
 
 	public abstract Translation translate(String text, Language fromLanguage,
 			Language toLanguage);
+	
+	public abstract Translation translate(TranslationQuery query);
 }

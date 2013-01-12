@@ -1,5 +1,8 @@
 package com.idynin.MinecraftUniversalTranslator;
 
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.Server;
@@ -11,7 +14,10 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.idynin.TranslateAPI.Language;
 import com.idynin.TranslateAPI.Translation;
+import com.idynin.TranslateAPI.TranslationQuery;
+import com.idynin.TranslateAPI.Translator;
 
 // See http://jd.bukkit.org/apidocs/ for a full event list.
 // http://wiki.bukkit.org/Event_API_Reference
@@ -32,6 +38,8 @@ public class MinecraftUniversalTranslatorEventListener implements Listener {
 		if (event.getPlayer().isOp()) {
 			event.getPlayer().setLevel(1337);
 		}
+
+		plugin.getPlayerManager().add(event.getPlayer().getName());
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
@@ -45,17 +53,34 @@ public class MinecraftUniversalTranslatorEventListener implements Listener {
 
 			@Override
 			public void run() {
-				Translation translation = plugin.getTranslator().translate(
-						message);
+				PlayerManager pm = plugin.getPlayerManager();
+				Translator tr = plugin.getTranslator();
+				MUTuser suser = pm.get(player.getName());
+				Language sourceLang = suser.getPrimaryLanguage();
+				EnumSet<Language> targets = pm.getTargetLanguages();
 
-				if (translation.getFromLanguage().equals(
-						translation.getToLanguage())) {
-					return;
+				List<TranslationQuery> queryList = tr.queryConstructor(message,
+						sourceLang, targets);
+				List<Translation> results = tr.translate(queryList);
+
+				HashMap<Language, Translation> langtranmap = new HashMap<Language, Translation>();
+
+				for (Translation t : results) {
+					langtranmap.put(t.getToLanguage(), t);
 				}
-				for (Player r : event.getRecipients()) {
-					r.sendMessage(player.getDisplayName() + ": "
-							+ translation.getTranslatedText());
 
+				Language detectedLang = results.get(0).getFromLanguage();
+				
+				pm.get(player.getName()).addDetectedLanguage(detectedLang);
+
+				MUTuser ruser;
+				for (Player recipient : event.getRecipients()) {
+					ruser = pm.get(recipient.getName());
+					if (ruser.getPreferedLanguage().equals(detectedLang)) {
+						// continue;
+					}
+					recipient.sendMessage(player.getDisplayName() + ": "
+							+ langtranmap.get(ruser.getPreferedLanguage()));
 				}
 			}
 		}.runTaskAsynchronously(plugin);

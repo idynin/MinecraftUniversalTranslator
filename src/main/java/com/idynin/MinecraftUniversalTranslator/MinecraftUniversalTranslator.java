@@ -15,7 +15,7 @@ import com.idynin.TranslateAPI.adapters.GoogleTranslatorAdapter;
 
 public class MinecraftUniversalTranslator extends JavaPlugin {
 
-	private boolean debug = false;
+	private boolean debug = true;
 
 	private MinecraftUniversalTranslatorCommandExecutor commandExecutor;
 	private MinecraftUniversalTranslatorEventListener eventListener;
@@ -28,6 +28,8 @@ public class MinecraftUniversalTranslator extends JavaPlugin {
 	private File pluginUpdateFile;
 
 	private MinecraftUniversalTranslator plugin;
+
+	private PlayerManager playerManager;
 
 	private BukkitRunnable pluginUpdateDetector = new BukkitRunnable() {
 
@@ -57,7 +59,7 @@ public class MinecraftUniversalTranslator extends JavaPlugin {
 					"" + ChatColor.RED + ChatColor.ITALIC
 							+ "        NOT STORING CACHE",
 					Server.BROADCAST_CHANNEL_ADMINISTRATIVE);
-			//translator.storeCache();
+			// translator.storeCache();
 
 		}
 	};
@@ -71,7 +73,11 @@ public class MinecraftUniversalTranslator extends JavaPlugin {
 		pluginUpdateDetector.cancel();
 		cacheStoreTask.cancel();
 
-		//translator.destroy();
+		// translator.destroy();
+	}
+
+	public PlayerManager getPlayerManager() {
+		return playerManager;
 	}
 
 	@Override
@@ -80,13 +86,14 @@ public class MinecraftUniversalTranslator extends JavaPlugin {
 
 		PluginManager pm = this.getServer().getPluginManager();
 
-		//translator = new Translator(getDataFolder());
+		// translator = new Translator(getDataFolder());
 		translator = new Translator(new GoogleTranslatorAdapter());
+		playerManager = new PlayerManager();
 		commandExecutor = new MinecraftUniversalTranslatorCommandExecutor(this);
 		eventListener = new MinecraftUniversalTranslatorEventListener(this);
 
 		pm.registerEvents(eventListener, this);
-
+		
 		for (String command : commandExecutor.getCommandList()) {
 			getCommand(command).setExecutor(commandExecutor);
 		}
@@ -98,8 +105,8 @@ public class MinecraftUniversalTranslator extends JavaPlugin {
 			this.debug = config.getBoolean("debug");
 		}
 
-		cacheStoreTask.runTaskTimerAsynchronously(this, TickTime.MINUTE,
-				TickTime.FIVEMINUTES);
+		// cacheStoreTask.runTaskTimerAsynchronously(this,
+		// TickTime.MINUTE,TickTime.FIVEMINUTES);
 
 		if (debug) {
 
