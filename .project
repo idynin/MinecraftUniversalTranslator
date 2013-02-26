@@ -22,14 +22,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>run_server.bat</name>
-			<type>1</type>
-			<location>C:/minecraft_server_dev/run_server.bat</location>
-		</link>
-		<link>
 			<name>update</name>
 			<type>2</type>
-			<location>C:/minecraft_server_dev/update</location>
+			<location>/Applications/eclipse/Eclipse.app/Contents/MacOS/C::/minecraft_server_dev/update</location>
 		</link>
 	</linkedResources>
 	<filteredResources>

@@ -1,15 +1,15 @@
 package com.idynin.MinecraftUniversalTranslator;
 
 public interface TranslateCache {
-	public void clearCache();
+  public void clearCache();
 
-	public boolean contains(String source);
+  public boolean contains(String source);
 
-	public String fetch(String source);
+  public String fetch(String source);
 
-	public void loadCache();
+  public void loadCache();
 
-	public String store(String source, String language, String result);
+  public String store(String source, String language, String result);
 
-	public void storeCache();
+  public void storeCache();
 }
